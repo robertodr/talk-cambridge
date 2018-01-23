@@ -9,6 +9,7 @@ class: center, middle, inverse
 .author[Roberto Di Remigio]
 
 .institution[UiT - The Arctic University of Norway]
+
 .institution[Department of Chemistry - Virginia Tech]
 
 .date[20 Januray 2018, Cambridge]
@@ -1088,9 +1089,6 @@ layout: false
 class: split-50-50
 
 ## Acknowledgements
-
-<p style="text-align:center;"><img src="images/acknowledgements.gif" style="width: 70%"></p>
-<p style="clear: both;">
 
 .column[
 __Benedetta Mennucci__ .cite[Università di Pisa]
