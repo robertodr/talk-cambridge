@@ -140,42 +140,6 @@ layout: false
 
 ---
 layout: false
-
-## March of the Solvation Robots
-
-<p style="text-align:center;"><img src="images/mind-map.png" style="width: 100%"></p>
-<p style="clear: both;">
-
-???
-
-In the thesis we have based the treatment of solvent effects in quantum chemistry
-on two "pillars":
-1. A variational formulation of quantum/classical polarizable Hamiltonians
-2. A modular implementation of the PCM
-
-Based on these two pillars, we have achieved:
-1. The coupling of continuum solvation with 4-component relativistic SCF
-   methods for the computation of energies and selected magnetic properties.
-2. Numerically more robust solvers with higher accuracy for the solution of the
-   PCM electrostatic problem.
-3. An extension of the range of applicability of the PCM to complex
-   environments, characterized by a position-dependent permittivity.
-4. An open-ended formulation of molecular response properties at the SCF level
-   of theory.
-5. A unifying view of the MBPT and CC models when including solvent effects.
-
----
-layout: false
-class: center, middle, inverse
-
-# Foundations
-
-<p style="text-align:center;"><img src="images/foundations.png" style="width: 100%"></p>
-<p style="clear: both;">
-
-
----
-layout: false
 class: split-50-50
 ## Quantum/Classical Multiscale Models.red[<sup>1</sup>]
 
@@ -378,6 +342,64 @@ $$`
 
 - _Galerkin_ or _collocation_ method
 - Direct inversion or iterative solver
+
+---
+layout: false
+## More Mathematics of PCM.red[<sup>5</sup>]
+
+`$$
+\left\{
+\begin{aligned}
+  &\text{Seek $\zeta \in V$ such that:}\\
+  &\forall \zeta \in V \,\,\,\,\,
+  \color{Red}{a(\zeta, \sigma)} = \color{Blue}{b(\zeta)}
+\end{aligned}
+\right.
+$$`
+
+**Lax-Milgram Lemma**
+
+If the bilinear form \\(a\\) is _continous_ and _coercive_
+in \\(V\\), then, for any linear form \\(b\\), the Problem is
+_well-posed_.
+
+**Variational Corollary**
+
+If the bilinear form is _symmetric_ and _positive_
+the unique solution to the Problem is
+the _unique minimum_ on \\(V\\) of the functional:
+`$$
+  \mathcal{F}(\zeta) = \frac{1}{2}\color{Red}{a(\zeta, \zeta)} - \color{Blue}{b(\zeta)}
+$$`
+
+.footnote-cite[.red[<sup>5</sup>] Lipparini, F.; Scalmani, G.; Mennucci, B.; Cancès, E.; Caricato, M.; Frisch, M. J. _J. Chem. Phys._ (2010), __133__, 014106]
+
+???
+
+- Introduce a suitable vector space, equipped with a norm
+  derived from a scalar product.
+  The solution belongs to such a vector space, which is
+  bigger that in the strong formulation (less constraints on
+  the regularity of the solution)
+- Hadamard well-posedness definition:
+  The Problemis well-posed if it admits one and only
+  one solution and the solution is bounded by the initial data, by
+  an a priori estimate (see Ern&Guermond, p.82, Def. 2.1)
+- Def. Continuity: A bilinear form on a normed vector space is
+  bounded, or continuous, if there is a constant \\(C\\) such that for
+  all \\(u, v \in V\\):
+  `$$
+    a(u, v) \leq C \lVert u\rVert \lVert v \rVert
+  $$`
+- Def. Coercivity: A bilinear form on a vector space is coercive,
+  or elliptic, if there is a constant \\(c > 0\\) such that \\(\forall u
+  \in V\\):
+  `$$
+    a(u, u) \geq c \lVert u\rVert^2
+  $$`
+  This implies that no eigenvalue of the linear operator associated
+  to the bilinear form can be zero, hence that the operator is
+  invertible!!
 
 ---
 layout: false
@@ -670,15 +692,6 @@ energy = pcmsolver_compute_polarization_energy(pcm_context, mep_lbl, asc_lbl)
 
 ---
 layout: false
-class: center, middle, inverse
-
-# PCM Above and Beyond
-
-<p style="text-align:center;"><img src="images/mind-map.png" style="width: 100%"></p>
-<p style="clear: both;">
-
----
-layout: false
 
 ## PCM Beyond SCF: MBPT and Coupled Cluster
 
@@ -890,72 +903,6 @@ layout: false
 ---
 layout: false
 
-## Using Wavelets for the PCM
-
-`
-$$
-\mathbf{A}\mathbf{f} = \mathbf{g}
-$$
-`
-
-**Collocation BEM**
-`$$
-A_{ij} = \int_{\Pi_j} k_A(\mathbf{s}_i, \mathbf{s}^\prime)\mathop{}\!\mathrm{d}\mathbf{s}^\prime,
-\quad g_i = g(\mathbf{s}_i)
-$$`
- - Parametrized diagonal elements
- - Dense linear systems
- - Symmetry-breaking
- - Convergence not ensured
-
-**Galerkin BEM**
-`$$
-A_{ij} = \int_{\Pi_i}\left(\int_{\Pi_j} k_A(\mathbf{s}, \mathbf{s}^\prime)\mathop{}\!\mathrm{d}\mathbf{s}^\prime\right)\mathop{}\!\mathrm{d}\mathbf{s},
-\quad g_i = \int_{\Pi_i}g(\mathbf{s})\mathop{}\!\mathrm{d}\mathbf{s}
-$$`
- - Sparse linear systems
- - Symmetry-preserving
- - Convergence ensured
-
-???
-
----
-layout: false
-class: split-60-40
-
-<p style="text-align:center;"><img src="images/paper-ii.png" style="width: 100%"></p>
-<p style="clear: both;">
-
-.column[
-<p style="text-align:center;"><img src="images/finger-structure.png" style="width: 60%"></p>
-<p style="clear: both;">
-]
-.column[
-**_Wavelet_ Galerkin BEM**
-- _Linear_ space requirements
-- _Linear_ time requirements
-- _Guaranteed_ accuracy
-]
-
-???
-
----
-layout: false
-
-## Wavelets for QM/Continuum: Accuracy and Cost
-
-<p style="text-align:center;"><img src="images/alpha_convergence.png" style="width: 90%"></p>
-<p style="clear: both;">
-
-???
-
-- Convergence pattern
-- Stricter error control
-- Larger number of surface points
-
----
-layout: false
-
 ## Arbitrary Order Molecular Response Properties in Solution
 
 <div class="imageWrapper">
@@ -963,6 +910,78 @@ layout: false
 --
   <img class="overlayImage" src="images/paper-v.png" style="width: 110%" align="left">
 </div>
+
+---
+layout: false
+
+## Perturbed PCM-SCF Energy Functional.red[<sup>8</sup>]
+
+- Energy functional in \\(\mathbf{C}\\)-representation:
+`$$
+\tilde{G}(\tilde{\mathbf{C}}, \color{Red}{\tilde{\mathrm{p}}}, t) =
+\tilde{E}(\tilde{\mathbf{C}}, t) +
+\frac{1}{2} \color{Red}{\tilde{\mathrm{p}}} \color{Green}{\mathbb{V}} \color{Red}{\tilde{\mathrm{p}}}+
+\color{Blue}{\tilde{\mathrm{s}}}(\tilde{\mathbf{C}}) \color{Red}{\tilde{\mathrm{p}}}
+$$`
+- Quasienergy in \\(\mathbf{C}\\)-representation:
+`$$
+\tilde{Q}(\tilde{\mathbf{C}}, \color{Red}{\tilde{\mathrm{p}}}, t) =
+\tilde{G}(\tilde{\mathbf{C}}, \color{Red}{\tilde{\mathrm{p}}}, t) - \mathrm{i}\sum_I \langle \tilde{\phi}_I| \dot{\tilde{\phi}}_I \rangle
+$$`
+- Quasienergy Lagrangian in \\(\mathbf{C}\\)-representation:
+`$$
+\tilde{L}(\tilde{\mathbf{C}}, \color{Red}{\tilde{\mathrm{p}}}, \tilde{\mathbf{\lambda}}, t) =
+\tilde{Q}(\tilde{\mathbf{C}}, \color{Red}{\tilde{\mathrm{p}}}, t) - \sum_{IJ}\tilde{\lambda}_{JI}(\langle \tilde{\phi}_I|\tilde{\phi}_J \rangle - \delta_{IJ})
+$$`
+
+.footnote-cite[.red[<sup>8</sup>] Thorvaldsen, A. J.; Ruud, K. _et al._, _J. Chem. Phys._ (2008), __129__, 214108]
+
+???
+
+---
+layout: false
+
+**Variational parameters \\(\tilde{\mathbf{C}}\\), \\(\tilde{\mathrm{p}}\\), \\(\tilde{\mathbf{\lambda}}\\)**
+
+`$$
+\begin{align}
+  \tilde{\mathbf{F}}\tilde{\mathbf{C}}\mathbf{\rho}
+  -\mathrm{i}(\tilde{\mathbf{R}}\tilde{\mathbf{C}}+\tilde{\mathbf{S}}\dot{\tilde{\mathbf{C}}})\mathbf{\rho} -
+  \tilde{\mathbf{S}}\tilde{\mathbf{C}}\mathbf{\rho}\tilde{\mathbf{\lambda}}\mathbf{\rho} & = 0
+  \quad\quad\text{TDSCF} \\
+  \mathbf{\rho}\tilde{\mathbf{C}}^\dagger \tilde{\mathbf{S}}\tilde{\mathbf{C}}\mathbf{\rho}
+  & = \mathbf{\rho} \quad\quad\text{Idempotency} \\
+  \color{Green}{\mathbb{V}}\color{Red}{\mathrm{p}} + \color{Blue}{\mathrm{s}} & = 0 \quad\quad\text{PCM}
+\end{align}
+$$`
+
+`$$
+\tilde{\mathbf{F}}
+= \tilde{\mathbf{F}}^\mathrm{vac} + \color{Red}{\tilde{\mathrm{p}}}\color{Blue}{\tilde{\mathrm{s}}};
+\quad\quad
+\color{BLue}{\tilde{\mathrm{s}}_{\mu\nu}(\mathbf{s})} = \left\langle \tilde{\chi}_\mu \left| \frac{-1}{\left|\mathbf{r} - \mathbf{s}\right|} \right| \tilde{\chi}_\nu \right\rangle
+$$`
+
+**Generalized KS energy, \\(\mathbf{D}\\)-representation**
+
+`$$
+\tilde{\mathcal{G}}
+\overset{\mathrm{tr}}{=}
+(\tilde{\mathbf{h}} + \tilde{\mathbf{V}}^{t} + \frac{1}{2}\tilde{\mathbf{G}}^{\gamma}(\tilde{\mathbf{D}}) - \frac{\mathrm{i}}{2}\tilde{\mathbf{T}} )\tilde{\mathbf{D}} +
+ \tilde{E}_\mathrm{xc}[\tilde{\rho}(\tilde{\mathbf{D}})] + h_\mathrm{nuc} +
+ \frac{1}{2} \color{Red}{\tilde{\mathrm{p}}} \color{Green}{\mathbb{V}} \color{Red}{\tilde{\mathrm{p}}} + \color{Blue}{\tilde{\mathrm{s}}} \color{Red}{\tilde{\mathrm{p}}}\tilde{\mathbf{D}}
+$$`
+
+**Time-averaged quasienergy derivative**
+
+`
+$$
+ \tilde{L}^a(\tilde{\mathbf{D}}, \color{Red}{\tilde{\mathrm{p}}}, t)
+ \overset{\lbrace\text{Tr}\rbrace_T}{=}
+ \tilde{\mathcal{G}}^{00,a} - \tilde{\mathbf{S}}^a\tilde{\mathbf{W}}
+$$
+`
+???
 
 ---
 layout: false
@@ -1007,11 +1026,11 @@ $$
 `
 $$
 \begin{alignat*}{2}
-  \mathcal{R}^{-1}\mathcal{T}\color{SkyBlue}{\mathrm{p}_\mathrm{H}^{b_N}}
-  +\text{Tr}\mathbf{\varphi}\color{SkyBlue}{\mathbf{D}_\mathrm{H}^{b_N}} = 0
+  \color{Green}{\mathbb{V}}\color{SkyBlue}{\mathrm{p}_\mathrm{H}^{b_N}}
+  +\text{Tr}\,\color{Blue}{\mathrm{s}}\color{SkyBlue}{\mathbf{D}_\mathrm{H}^{b_N}} = 0
   \quad&\quad
-  \mathcal{R}^{-1}\mathcal{T}\color{Orange}{\mathrm{p}_\mathrm{P}^{b_N}}
-  +\text{Tr}\mathbf{\varphi}\color{Orange}{\mathbf{D}_\mathrm{P}^{b_N}} =
+  \color{Green}{\mathbb{V}}\color{Orange}{\mathrm{p}_\mathrm{P}^{b_N}}
+  +\text{Tr}\,\color{Blue}{\mathrm{s}}\color{Orange}{\mathbf{D}_\mathrm{P}^{b_N}} =
   \color{Orange}{\mathbb{S}^{(n-1)}_\omega}
 \end{alignat*}
 $$
