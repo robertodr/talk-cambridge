@@ -772,47 +772,6 @@ layout: false
 ---
 layout: false
 
-## PTED-CCSD(T) and PTED-\\(\Lambda\\)CCSD(T)
-
-.left-column[
-### PTED-MBPT
-]
-.right-column[
-- Perturbative expansion of PTED-CC
-- Source operator \\(\mathrm{s}\\) is _zeroth-order_
-- Use \\(2n + 1\\) and \\(2n + 2\\) rules
-
-#### PTED-\\(\Lambda\\)CCSD(T)
-`
-$$
-  G_{\Lambda(\text{T})}
-  =\sum_{u=1}^2\langle\color{Green}{\bar{t}_{u}^{*}}| [\Phi, \color{Blue}{T_3^{*}}] | \mathrm{HF}\rangle
-    +\color{Red}{\mathrm{p}^{*}}\langle\color{Green}{\bar{t}_{2}^{*}} | [\mathrm{s}, \color{Blue}{T_3^{*}}] | \mathrm{HF}\rangle
-$$
-`
-#### PTED-CCSD(T)
-
-`
-$$
-  G_{(\text{T})}
-  =\sum_{u=1}^2\langle\color{Blue}{t_{u}^{*}}| [\Phi, \color{Blue}{T_3^{*}}] | \mathrm{HF}\rangle
-    +\color{Red}{
-  \mathrm{p} ^ { * }}\langle\color{Blue}{t_{2}^{
-  *}} | [\mathrm{s}, \color{Blue}{T_3^{
-  *}}] | \mathrm{
-  HF}\rangle
-$$
-`
-]
-
-???
-
-- Similarly for iterative approximate singles-doubles (CC2) and
-  singles-doubles-triples (CC3) methods
-
----
-layout: false
-
 ## Solvation in the Relativistic Regime
 
 <p style="text-align:left;"><img src="images/hamilton-attack.png" style="width: 65%"></p>
