@@ -693,7 +693,7 @@ energy = pcmsolver_compute_polarization_energy(pcm_context, mep_lbl, asc_lbl)
 ---
 layout: false
 
-## PCM Beyond SCF: MBPT and Coupled Cluster
+## PCM Beyond SCF: Coupled Cluster
 
 
 <p style="text-align:center;"><img src="images/excitations.png" style="width: 40%"></p>
